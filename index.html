@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arthi Indhirasenan — Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0b0f1a;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --accent: #4f8ef7;
+      --accent2: #a78bfa;
+      --text: #e8edf5;
+      --muted: #8896aa;
+      --border: #1e2d45;
+      --card: #131c2e;
+    }
+    :root[data-theme="light"] {
+      --bg: #f0f4ff;
+      --bg2: #ffffff;
+      --bg3: #e4ecff;
+      --accent: #2563eb;
+      --accent2: #7c3aed;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #c7d7f5;
+      --card: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .theme-toggle {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.35rem 0.8rem;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-bio {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,142,247,0.35); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Hero right: stats */
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { border-color: var(--accent); transform: translateX(6px); }
+    .stat-icon { font-size: 1.8rem; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .stat-value { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      margin: 0.75rem 0 3rem;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .skill-item:hover { border-color: var(--accent); }
+    .skill-top { display: flex; justify-content: space-between; margin-bottom: 0.6rem; }
+    .skill-name { font-weight: 600; font-size: 0.95rem; }
+    .skill-pct { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--accent); }
+    .skill-bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .skill-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(79,142,247,0.12); }
+    .project-card:hover::before { opacity: 1; }
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+    }
+    .project-title { font-size: 1.15rem; font-weight: 700; }
+    .project-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: var(--bg3);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    /* EDUCATION & CERTS */
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+    .timeline-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      border-left: 3px solid var(--accent);
+      transition: border-color 0.2s;
+    }
+    .timeline-item:hover { border-left-color: var(--accent2); }
+    .timeline-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+    .timeline-sub { color: var(--muted); font-size: 0.875rem; margin-bottom: 0.25rem; }
+    .timeline-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+    }
+
+    /* CONTACT */
+    #contact { text-align: center; }
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-tagline {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links a { display: none; }
+      #hero { padding: 7rem 1.25rem 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      section { padding: 4rem 1.25rem; }
+    }
+
+    /* Floating bg orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb1 { width: 500px; height: 500px; background: var(--accent); top: -100px; right: -100px; }
+    .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: 100px; left: -100px; }
+    main { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">arthi.dev</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="hero-tag">// Data Analyst</p>
+      <h1 class="hero-name">Hi, I'm<br /><span>Arthi Indhirasenan</span></h1>
+      <p class="hero-bio">
+        Aspiring Data Analyst with a strong foundation in SQL, Excel, Power BI, and Python. 
+        I turn raw data into actionable business insights — from cleaning messy datasets 
+        to building dashboards that drive decisions.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="mailto:arthiinder25@gmail.com" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-icon">📊</span>
+        <div>
+          <div class="stat-label">Specialisation</div>
+          <div class="stat-value">Data Analysis & BI</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🎓</span>
+        <div>
+          <div class="stat-label">Degree</div>
+          <div class="stat-value">BCA — CGPA 8.60</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📍</span>
+        <div>
+          <div class="stat-label">Location</div>
+          <div class="stat-value">Chennai, Tamil Nadu</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🚀</span>
+        <div>
+          <div class="stat-label">Projects Built</div>
+          <div class="stat-value">3 End-to-End Projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">// What I work with</p>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">SQL / MySQL</span><span class="skill-pct">90%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">Microsoft Excel</span><span class="skill-pct">88%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">Power BI</span><span class="skill-pct">82%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">Python (Pandas)</span><span class="skill-pct">78%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">Data Visualisation</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-top"><span class="skill-name">Statistical Analysis</span><span class="skill-pct">75%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">// What I've built</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="divider"></div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <span class="project-num">01 —</span>
+        <h3 class="project-title">E-Commerce Sales Analysis Dashboard</h3>
+        <p class="project-desc">
+          Built a sales analytics dashboard to track revenue, product performance, and customer trends. 
+          Cleaned and aggregated raw sales data, then delivered actionable insights through KPI 
+          tracking and monthly sales reporting using Pivot Tables and Charts.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Excel</span>
+          <span class="tag">SQL</span>
+          <span class="tag">KPI Tracking</span>
+          <span class="tag">Pivot Tables</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">02 —</span>
+        <h3 class="project-title">Student Enrollment & Performance Tracker</h3>
+        <p class="project-desc">
+          Built a system to record student enrollment, attendance, and marks in a structured MySQL 
+          database. Queried and analyzed academic data to identify attendance and performance trends, 
+          applying real data-analysis skills to a live dataset.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Data Analysis</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">03 —</span>
+        <h3 class="project-title">Retail Store Analytics System</h3>
+        <p class="project-desc">
+          Built a retail analytics solution analyzing sales, inventory, and customer purchasing 
+          behavior. Used Python (Pandas) for data cleaning and SQL for revenue and profit margin 
+          metrics. Designed interactive Power BI dashboards for sales forecasting and KPI tracking.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Forecasting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section id="education">
+  <div class="reveal">
+    <p class="section-label">// Background</p>
+    <h2 class="section-title">Education & Certifications</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-title">BCA in Computer Applications</div>
+        <div class="timeline-sub">SRM Institute of Science & Technology</div>
+        <div class="timeline-meta">Completed May 2026 &nbsp;·&nbsp; CGPA: 8.60</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Senior Secondary (Class XII)</div>
+        <div class="timeline-sub">Dr. V.G.N. Matriculation School</div>
+        <div class="timeline-meta">Percentage: 71.83%</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Full Stack Python Development</div>
+        <div class="timeline-sub">Approtech R&D Solutions Pvt. Ltd., Tambaram</div>
+        <div class="timeline-meta">Certification &nbsp;·&nbsp; Sep 2025</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Excel Certification</div>
+        <div class="timeline-sub">Udemy</div>
+        <div class="timeline-meta">Certification</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-title">Cyber Security</div>
+        <div class="timeline-sub">TATA STRIVE</div>
+        <div class="timeline-meta">Certification</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">// Let's connect</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="divider" style="margin: 0.75rem auto 3rem;"></div>
+    <div class="contact-card">
+      <p class="contact-tagline">
+        I'm open to Data Analyst roles, internships, and collaborations.<br />
+        Let's talk data!
+      </p>
+      <div class="contact-links">
+        <a href="mailto:arthiinder25@gmail.com" class="contact-link">✉️ arthiinder25@gmail.com</a>
+        <a href="https://linkedin.com/in/arthi-inder" target="_blank" class="contact-link">💼 LinkedIn</a>
+        <a href="https://github.com/Arthiinder" target="_blank" class="contact-link">🐙 GitHub</a>
+        <a href="tel:+918610904296" class="contact-link">📞 +91 86109 04296</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  &copy; 2026 Arthi Indhirasenan &nbsp;·&nbsp; Built with 💙 &nbsp;·&nbsp; Chennai, India
+</footer>
+
+<script>
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️';
+    }
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate skill bars
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
